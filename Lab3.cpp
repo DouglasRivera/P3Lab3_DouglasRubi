@@ -1,15 +1,39 @@
 #include <iostream>
-#include <ctime>
-#include <math.h>
-#include <cstdlib>
+#include <conio.h>
+#include <string>
+#include <random>
+#include <time.h>
+
 using namespace std;
 
 int menu();
 
- /*void EjerTrianguloPascal();
- void EjerDesviacion();
- void EjerGrafico();*/
+char** MatrizConObstaculos(int N,int M, int K);
 
+
+char** MatrizConObstaculos(int N,int M, int K){
+	char** Matriz = new char*[N];
+	for(int i=0; i<N; i++) {
+		Matriz[i] = new char[M];
+	}
+	
+	for(int i=0; i<N; i++) {
+		for(int j=0; j<M; j++) {
+			Matriz[i][j] = '-';
+		}
+	}	
+	srand(time(NULL));
+	for(int i=0; i<K; i++) {
+		int Num_i =  rand()% N;
+		int Num_j = rand() % M;
+		char m = Matriz[Num_i][Num_j];
+		int Camino = '-';
+		if(Matriz[Num_i][Num_j]==Camino) {
+			Matriz[Num_i][Num_j]='#';
+		}
+	}
+	return Matriz;
+}
 
 
 int main() {
@@ -25,15 +49,34 @@ switch (opcion){
 		break;
 }
 	case 2:{
+		  char** matriz;
 	      cout << endl;
 	      cout << "Matriz de Caracteres(Se retorna)" << endl;
-	      
+	      cout << "------------........------------" << endl;
+				cout<<"Ingrese el Numero de Filas deseadas: "<<endl;
+				int N;
+				cin>>N;
+				cout<<"Ingrese el Numero de Columnas deseadas: "<<endl;
+				int M ;
+				cin>>M;
+				cout<<"Ingrese la cantidad de obstaculos deseados: "<<endl;
+				int K;
+				cin>>K;
+				matriz = MatrizConObstaculos(N,M,K);
+				for(int i=0; i<N; i++) {
+					cout<<"["; 
+					for(int j=0; j<M; j++) {
+					cout<<"'"<<matriz[i][j]<<"'";
+					}
+					cout<<"]"; 
+					cout<<endl;
+				}
 	      cout <<endl;
 		break;
 	}
 	case 3:{
 		  cout << endl;
-	      cout << "Todo en Uno(Grafico de Barra)" << endl;
+	      cout << "Todo en Uno(Clean screen)" << endl;
 	      
 	      cout <<endl;
 		break;
@@ -49,7 +92,7 @@ switch (opcion){
 }
 int menu() {
 	int opcion;
-	cout << "----MENU----" << endl;
+	cout << "------------MENU----------------" << endl;
 	cout << "1. Arreglo con Caracteres" << endl;
 	cout << "2. Matriz de Caracteres" << endl;
 	cout << "3. Ejercicio de Grafica" << endl;
