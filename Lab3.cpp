@@ -7,21 +7,146 @@
 using namespace std;
 
 int menu();
-
+char* lecturaCadena(int);
+void printCadena(char*, int);
+void ArregloDescomprimido(char*, int);
+string indexNum(char);
 char** MatrizConObstaculos(int N,int M, int K);
 
+char* lecturaCadena(int size) {
+    char* array;
+    array = new char[size];
+    char var = 0;
+    for (int i = 0; i < size; i++) {
+        cout << "Ingrese el indice " << "[ " << i << " ] :";
+        cin >> var;
+        array[i] = var;
+    }
+    return array;
+}
 
+void printCadena(char* array, int size) {
+    for (int i = 0; i < size; i++) {
+        cout << "[ " << array[i] << " ]";
+    }
+    cout << endl << endl;
+}
+
+void ArregloDescomprimido(char* array, int size) {
+    int totalSize = 0;
+    string num = "";
+    int* numbers;
+    numbers = new int[size];
+    //contador para numbers
+    int contador = 0;
+
+    for (int i = 0; i < size; i++) {
+        char var = array[i];
+        if ((int) var >= 48 && (int) var <= 57) {\
+            num += indexNum(var);
+        }
+        else {
+            totalSize += stoi(num);
+            numbers[contador] = stoi(num);
+            contador++;
+            num.clear();
+        }
+    }
+    //ver numbers
+    for(int i = 0; i < size; i++){
+        cout << numbers[i];
+    }
+    cout << endl << endl;
+    cout << totalSize << endl;
+    //el nuevo arreglo
+    char* newArray;
+    newArray = new char [totalSize];
+    //contador con los numeros del array
+    contador = 0;
+    //nuevo contador para newArray
+    int count = 0;
+    //for principal llena el nuevo arreglo con los nuevos caracteres
+    for (int i = 0; i < size; i++) {
+        char var = array[i];
+        if ((int)var >= 65 && (int)var <= 90) {
+            int tempSize = numbers[contador];
+            int flag = 0;
+            
+            while (flag < tempSize) {
+                newArray[count] = var;
+                flag++;
+                count++;
+            }
+            contador++;
+        }
+    }
+    //delete de numbers
+     if (numbers != 0) {
+        delete[] numbers;
+        numbers = 0;
+    }
+    cout << "Este es el arreglo" << endl << endl;
+    printCadena(newArray, totalSize);
+    if(newArray != 0){
+        delete[] newArray;
+        newArray = 0;
+    }
+}
+
+string indexNum(char var) {
+    switch ((int) var) {
+        case 48:
+        {
+            return "0";
+        }
+        case 49:
+        {
+            return "1";
+        }
+        case 50:
+        {
+            return "2";
+        }
+        case 51:
+        {
+            return "3";
+        }
+        case 52:
+        {
+            return "4";
+        }
+        case 53:
+        {
+            return "5";
+        }
+        case 54:
+        {
+            return "6";
+        }
+        case 55:
+        {
+            return "7";
+        }
+        case 56:
+        {
+            return "8";
+        }
+        case 57:
+        {
+            return "9";
+        }
+    }
+}
 char** MatrizConObstaculos(int N,int M, int K){
 	char** Matriz = new char*[N];
 	for(int i=0; i<N; i++) {
 		Matriz[i] = new char[M];
-	}
-	
+}	
 	for(int i=0; i<N; i++) {
 		for(int j=0; j<M; j++) {
 			Matriz[i][j] = '-';
-		}
-	}	
+	}
+}	
 	srand(time(NULL));
 	for(int i=0; i<K; i++) {
 		int Num_i =  rand()% N;
@@ -44,8 +169,19 @@ switch (opcion){
 	case 1:{
 		cout << endl;
 	    cout << "Arreglo de Caracteres(Se retorna)" << endl;
-	   
-	    cout <<endl;
+	    cout << "------------........------------" << endl;
+	    int size = 0;
+	    cout << "Ingrese el size de la cadena a ingresar: ";
+	    cin >> size;
+	    cout << endl << endl;	
+	    char* array;
+	    array = lecturaCadena(size);
+	    ArregloDescomprimido(array, size);
+	    		if(array != 0){
+	        		delete[] array;
+	        		array = 0;
+	    		}
+	    return 0;		
 		break;
 }
 	case 2:{
@@ -66,7 +202,8 @@ switch (opcion){
 				for(int i=0; i<N; i++) {
 					cout<<"["; 
 					for(int j=0; j<M; j++) {
-					cout<<"'"<<matriz[i][j]<<"'";
+					cout<<"'"
+					<<matriz[i][j]<<"'";
 					}
 					cout<<"]"; 
 					cout<<endl;
@@ -92,11 +229,12 @@ switch (opcion){
 }
 int menu() {
 	int opcion;
-	cout << "------------MENU----------------" << endl;
+	cout << "-----------|||MENU|||------------" << endl;
 	cout << "1. Arreglo con Caracteres" << endl;
-	cout << "2. Matriz de Caracteres" << endl;
+	cout << "2. Matriz con Obstaculos" << endl;
 	cout << "3. Ejercicio de Grafica" << endl;
 	cout << "4. Opcion de Salida del menu" << endl;
+	cout << "------------|||||||||------------" << endl;
 	cout << endl;
 	cout << "Ingrese la opcion deseada: ";
 	cin >> opcion;
