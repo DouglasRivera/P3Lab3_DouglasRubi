@@ -9,7 +9,7 @@ using namespace std;
 int menu();
 char* lecturaCadena(int);
 void printCadena(char*, int);
-void ArregloDescomprimido(char*, int);
+char* ArregloDescomprimido(char*, int);
 string indexNum(char);
 char** MatrizConObstaculos(int N,int M, int K);
 
@@ -32,7 +32,7 @@ void printCadena(char* array, int size) {
     cout << endl << endl;
 }
 
-void ArregloDescomprimido(char* array, int size) {
+char* ArregloDescomprimido(char* array, int size) {
     int totalSize = 0;
     string num = "";
     int* numbers;
@@ -87,11 +87,9 @@ void ArregloDescomprimido(char* array, int size) {
     }
     cout << "Este es el arreglo" << endl << endl;
     printCadena(newArray, totalSize);
-    if(newArray != 0){
-        delete[] newArray;
-        newArray = 0;
-    }
+    return newArray;
 }
+
 
 string indexNum(char var) {
     switch ((int) var) {
