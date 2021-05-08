@@ -9,7 +9,7 @@ using namespace std;
 int menu();
 char* lecturaCadena(int);
 void printCadena(char*, int);
-char* ArregloDescomprimido(char*, int);
+int ArregloDescomprimido(char*, int);
 string indexNum(char);
 char** MatrizConObstaculos(int N,int M, int K);
 
@@ -32,14 +32,13 @@ void printCadena(char* array, int size) {
     cout << endl << endl;
 }
 
-char* ArregloDescomprimido(char* array, int size) {
+int ArregloDescomprimido(char* &array, int size, char* &newArray) {
     int totalSize = 0;
     string num = "";
     int* numbers;
     numbers = new int[size];
     //contador para numbers
     int contador = 0;
-
     for (int i = 0; i < size; i++) {
         char var = array[i];
         if ((int) var >= 48 && (int) var <= 57) {\
@@ -52,14 +51,7 @@ char* ArregloDescomprimido(char* array, int size) {
             num.clear();
         }
     }
-    //ver numbers
-    for(int i = 0; i < size; i++){
-        cout << numbers[i];
-    }
-    cout << endl << endl;
-    cout << totalSize << endl;
     //el nuevo arreglo
-    char* newArray;
     newArray = new char [totalSize];
     //contador con los numeros del array
     contador = 0;
@@ -81,13 +73,18 @@ char* ArregloDescomprimido(char* array, int size) {
         }
     }
     //delete de numbers
-     if (numbers != 0) {
+    if (numbers != 0) {
         delete[] numbers;
         numbers = 0;
     }
     cout << "Este es el arreglo" << endl << endl;
     printCadena(newArray, totalSize);
-    return newArray;
+    
+    if(newArray != 0){
+        delete[] newArray;
+        newArray = 0;
+    }
+    return totalSize;
 }
 
 
@@ -165,21 +162,24 @@ int main() {
 int opcion = menu();
 switch (opcion){
 	case 1:{
-		cout << endl;
-	    cout << "Arreglo de Caracteres(Se retorna)" << endl;
-	    cout << "------------........------------" << endl;
-	    int size = 0;
-	    cout << "Ingrese el size de la cadena a ingresar: ";
-	    cin >> size;
-	    cout << endl << endl;	
-	    char* array;
-	    array = lecturaCadena(size);
-	    ArregloDescomprimido(array, size);
-	    		if(array != 0){
-	        		delete[] array;
-	        		array = 0;
-	    		}
-	    return 0;		
+	int size = 0;
+    cout << "Ingrese el size de la cadena a ingresar: ";
+    cin >> size;
+    cout << endl << endl;
+
+    char* array;
+    char* newArray;
+
+    array = lecturaCadena(size);
+
+    cout << ArregloDescomprimido(array, size, newArray) << endl;
+    
+    if(array != 0){
+        delete[] array;
+        array = 0;
+    }
+
+    return 0;		
 		break;
 }
 	case 2:{
@@ -212,8 +212,8 @@ switch (opcion){
 	case 3:{
 		  cout << endl;
 	      cout << "Todo en Uno(Clean screen)" << endl;
-	      
-	      cout <<endl;
+	      	cout<<"Ingrese el Numero de Filas deseadas: "<<endl;
+				
 		break;
 	}
 	case 4:{
